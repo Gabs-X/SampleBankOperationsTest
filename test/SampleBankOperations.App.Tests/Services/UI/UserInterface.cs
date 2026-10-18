@@ -26,7 +26,7 @@ namespace SampleBankOperations.App.Tests.Services.UI
             Console.SetOut(new StringWriter());
 
             // Act
-            Assert.Throws<Exception>(() => _userInterface.Run());
+            _userInterface.Run();
 
             // Assert
             _mockBankOperations.Verify(x => x.OpenAccount(), Times.Once);
@@ -43,7 +43,7 @@ namespace SampleBankOperations.App.Tests.Services.UI
             Console.SetOut(new StringWriter());
 
             // Act
-            Assert.Throws<Exception>(() => _userInterface.Run());
+            _userInterface.Run();
 
             // Assert
             _mockBankOperations.Verify(x => x.ViewBalance(account), Times.Once);
@@ -60,7 +60,7 @@ namespace SampleBankOperations.App.Tests.Services.UI
             Console.SetOut(output);
 
             // Act
-            Assert.Throws<Exception>(() => _userInterface.Run());
+            _userInterface.Run();
 
             // Assert
             var result = output.ToString();
@@ -83,7 +83,7 @@ namespace SampleBankOperations.App.Tests.Services.UI
             Console.SetOut(new StringWriter());
 
             // Act
-            Assert.Throws<Exception>(() => _userInterface.Run());
+            _userInterface.Run();
 
             // Assert
             _mockBankOperations.Verify(x => x.Transfer(fromAccount, toAccount), Times.Once);
@@ -95,11 +95,14 @@ namespace SampleBankOperations.App.Tests.Services.UI
             // Arrange
             var input = new Queue<string>(new[] { "9" });
             Console.SetIn(new StringReader(string.Join(Environment.NewLine, input)));
-            Console.SetOut(new StringWriter());
+            var output = new StringWriter();
+            Console.SetOut(output);
 
-            // Act & Assert
-            var ex = Assert.Throws<Exception>(() => _userInterface.Run());
-            Assert.Equal("Thread was being aborted.", ex.Message);
+            // Act
+            _userInterface.Run();
+
+            // Assert
+            Assert.Contains("Obrigado por utilizar o SampleBankOperations!", output.ToString());
         }
     }
 }

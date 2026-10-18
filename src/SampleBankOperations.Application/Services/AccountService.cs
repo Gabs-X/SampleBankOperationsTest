@@ -65,14 +65,24 @@ public class AccountService : IAccountService
         Predicate<decimal> canWithdraw, 
         Predicate<decimal> canTransfer)
     {
-        var existingFromAccount = _transferHelper.GetValidAccount(fromAccount, "Source");
-        var existingToAccount = _transferHelper.GetValidAccount(toAccount, "Destination");
+        Account existingFromAccount;
+        Account existingToAccount;
+        try
+        {
+            existingFromAccount = _transferHelper.GetValidAccount(fromAccount, "Source");
+            existingToAccount = _transferHelper.GetValidAccount(toAccount, "Destination");
+        }
+        catch (InvalidOperationException)
+        {
+            return false;
+        }
 
         if (!_transferHelper.HasSufficientBalance(existingFromAccount, amount, canWithdraw, canTransfer)) return false;
 
+        // ExecuteTransfer persiste as duas contas; aqui só movimentamos o saldo
         _transferHelper.ExecuteTransfer(existingFromAccount, existingToAccount, amount,
-            amt => Withdraw(existingFromAccount, amt, canWithdraw),
-            amt => Deposit(existingToAccount, amt, _ => { }));
+            amt => existingFromAccount.Withdraw(amt),
+            amt => existingToAccount.Deposit(amt));
 
         return true;
     }

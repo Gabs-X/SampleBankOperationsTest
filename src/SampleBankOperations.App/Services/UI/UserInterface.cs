@@ -8,6 +8,7 @@ public class UserInterface
 {
     private readonly IBankOperations _bankOperations;
     private readonly Dictionary<string, Action> _actions;
+    private bool _exitRequested;
 
     public UserInterface(IBankOperations bankOperations)
     {
@@ -27,7 +28,8 @@ public class UserInterface
 
     public void Run()
     {
-        while (true)
+        _exitRequested = false;
+        while (!_exitRequested)
         {
             Console.WriteLine("Bem-vindo ao SampleBankOperations! Escolha uma opção:");
             Console.WriteLine("1. Abrir Conta");
@@ -39,8 +41,9 @@ public class UserInterface
             Console.WriteLine("9. Sair");
 
             var choice = Console.ReadLine();
+            if (choice == null) return; // fim da entrada
 
-            if (_actions.TryGetValue(choice!, out var action))
+            if (_actions.TryGetValue(choice, out var action))
             {
                 action();
             }
@@ -89,6 +92,6 @@ public class UserInterface
     private void ExitApplication()
     {
         Console.WriteLine("Obrigado por utilizar o SampleBankOperations!");
-        Environment.Exit(0);
+        _exitRequested = true;
     }
 }
