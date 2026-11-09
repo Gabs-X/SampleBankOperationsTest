@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Relatórios de cobertura gerados localmente (ReportGenerator / coverlet)
+[Cc]overage[Rr]eport/
+[Cc]overage[Rr]esults/
+*.cobertura.xml
+
+# Capturas antigas do relatório de cobertura
+Print relatorio.png

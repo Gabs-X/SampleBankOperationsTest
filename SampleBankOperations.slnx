@@ -9,5 +9,6 @@
     <Project Path="test/SampleBankOperations.Core.Tests/SampleBankOperations.Core.Tests.csproj" />
     <Project Path="test/SampleBankOperations.Application.Tests/SampleBankOperations.Application.Tests.csproj" />
     <Project Path="test/SampleBankOperations.App.Tests/SampleBankOperations.App.Tests.csproj" />
+    <Project Path="test/SampleBankOperations.Infrastructure.Tests/SampleBankOperations.Infrastructure.Tests.csproj" />
   </Folder>
 </Solution>

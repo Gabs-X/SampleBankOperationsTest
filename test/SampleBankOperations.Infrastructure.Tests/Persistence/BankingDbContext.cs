@@ -42,14 +42,8 @@ namespace SampleBankOperations.Tests.Infrastructure.Persistence
             var context = new BankingDbContext();
             var accountId = Guid.NewGuid();
 
-            var original = new Account("123", 200, AccountType.Checking)
-            {
-                AccountId = accountId
-            };
-            var updated = new Account("123", 999, AccountType.Savings)
-            {
-                AccountId = accountId
-            };
+            var original = new Account("123", 200, AccountType.Checking);
+            var updated = new Account("123", 999, AccountType.Savings);
 
             // Act
             context.Accounts[accountId] = original;
